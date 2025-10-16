@@ -36,7 +36,7 @@ export default function QuizzDisplay({quizzList}: QuizzDisplayProps) {
         {quizzListMelange.map((quizz: QuizzCaracteristics) => (
           <div key={quizz.id}>
             <fieldset>
-              <legend dangerouslySetInnerHTML={{__html: quizz.question}}/>
+              <legend>{decodeHtmlEntities(quizz.question)}</legend>
               <div className="align-center">
                 {quizz.answers.map((answer: string, index) => (
                   <label className={isChecked(quizz.id, answer) ? "card-radio selected" : "card-radio"} key={answer}
@@ -48,7 +48,7 @@ export default function QuizzDisplay({quizzList}: QuizzDisplayProps) {
                       checked={isChecked(quizz.id, answer)}
                       onChange={() => handleChange(quizz.id, answer)}
                     />
-                    {answer}
+                    {decodeHtmlEntities(answer)}
                   </label>
                 ))}
               </div>
@@ -64,6 +64,18 @@ export default function QuizzDisplay({quizzList}: QuizzDisplayProps) {
 
     </section>);
 }
+
+/**
+ * Il y a du contenu HTML dans les réponses envoyés, il faut donc les décoder pour avoir du texte propre
+ *
+ * @param text le texte contenant du HTML à décoder
+ */
+function decodeHtmlEntities(text: string): string {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(text, 'text/html');
+  return doc.documentElement.textContent || '';
+}
+
 
 /**
  * Mélange avec l'algorithme de Fisher-Yates. On parcourt le tableau de la fin vers le début, et pour chaque élément,
