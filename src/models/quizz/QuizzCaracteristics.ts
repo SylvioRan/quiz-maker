@@ -1,4 +1,5 @@
 export type QuizzCaracteristics = {
+  id: string,
   type: string,
   difficulty: string,
   category: string,

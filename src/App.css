@@ -6,4 +6,34 @@
   display: flex;
   gap: 1rem;
   align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.card-radio {
+  display: block;
+  border: 3px solid darkgreen; /* vert clair */
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: white;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+input[type="radio"] {
+  display: none; /* cache le cercle natif */
+}
+
+.card-radio:hover {
+  background-color: #c8e6c9; /* vert un peu plus foncé au survol */
+}
+
+.card-radio input[type="radio"] {
+  margin-right: 0.5rem;
+}
+
+.card-radio.selected {
+  border-color: darkgreen; /* vert foncé */
+  background-color: forestgreen; /* fond vert sélectionné */
 }

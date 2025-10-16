@@ -54,10 +54,12 @@ export async function recupererQuizz({categorie, difficulte}: QuizzRequest): Pro
  * champ, on fait un petit mapping de ces données, dans le champ answers
  *
  * @param quizz le quizz pour extraire ses réponses
+ * @param index position de l'élément dans la liste
  */
-function mapQuizzWithAnswers(quizz: QuizzCaracteristics): QuizzCaracteristics {
+function mapQuizzWithAnswers(quizz: QuizzCaracteristics, index: number): QuizzCaracteristics {
   return {
     ...quizz,
+    id: `question-${index}`,
     answers: [...[quizz.correct_answer], ...quizz.incorrect_answers],
   };
 }
