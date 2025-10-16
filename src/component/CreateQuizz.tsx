@@ -23,8 +23,7 @@ export default function CreateQuizz({categories}: CreatQuizzProps) {
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault(); // Permet de ne pas faire rafraichir la page
-
-
+    
     if (!categorie || !difficulte) {
       alert('Veuillez sélectionner une catégorie et une difficulté.');
       return;
@@ -33,7 +32,6 @@ export default function CreateQuizz({categories}: CreatQuizzProps) {
     recupererQuizz({categorie, difficulte: difficulte as DifficulteType})
       .then(questions => {
         setQuizz(questions);
-        // Tu peux les afficher ou les stocker dans un state
       })
       .catch(console.error);
   };

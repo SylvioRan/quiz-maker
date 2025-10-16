@@ -1,5 +1,5 @@
 import type {QuizzCaracteristics} from "../models/quizz/QuizzCaracteristics.ts";
-import {useCallback, useMemo, useState} from "react";
+import {useCallback, useEffect, useMemo, useState} from "react";
 
 type QuizzDisplayProps = {
   quizzList: QuizzCaracteristics[],
@@ -7,6 +7,11 @@ type QuizzDisplayProps = {
 
 export default function QuizzDisplay({quizzList}: QuizzDisplayProps) {
   const [answers, setAnswers] = useState<{ [key: string]: string }>({});
+
+  // A chaque fois que le quizz change, on réinitialise les réponses
+  useEffect(() => {
+    setAnswers({});
+  }, [quizzList]);
 
   const quizzListMelange: QuizzCaracteristics[] = useMemo(() =>
     quizzList.map(quizz => ({
@@ -33,19 +38,18 @@ export default function QuizzDisplay({quizzList}: QuizzDisplayProps) {
             <fieldset>
               <legend dangerouslySetInnerHTML={{__html: quizz.question}}/>
               <div className="align-center">
-                {quizz.answers.map((answer: string) => (
+                {quizz.answers.map((answer: string, index) => (
                   <label className={isChecked(quizz.id, answer) ? "card-radio selected" : "card-radio"} key={answer}
                          style={{width: '100%'}}>
                     <input
                       type="radio"
-                      name={`question-${quizz.id}`}
+                      name={`reponse-${index}`}
                       value={answer}
                       checked={isChecked(quizz.id, answer)}
                       onChange={() => handleChange(quizz.id, answer)}
                     />
                     {answer}
                   </label>
-
                 ))}
               </div>
 
