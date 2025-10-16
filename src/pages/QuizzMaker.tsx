@@ -1,7 +1,7 @@
 import {useCategories} from "../hooks/useCategories.ts";
 import CreateQuizz from "../component/CreateQuizz.tsx";
 
-export default function Home() {
+export default function QuizzMaker() {
   const categories = useCategories();
 
   return (

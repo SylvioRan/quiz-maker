@@ -1,10 +1,10 @@
 import type {ReactElement} from "react";
-import Home from "../pages/Home.tsx";
+import QuizzMaker from "../pages/QuizzMaker.tsx";
 
 type RouteItem = { path: string, element: ReactElement };
 
 const routes: RouteItem[] = [
-  {path: '/', element: <Home/>}
+  {path: '/', element: <QuizzMaker/>}
 ];
 
 export default routes;

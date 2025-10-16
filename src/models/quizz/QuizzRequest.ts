@@ -1,6 +1,6 @@
-type DifficulteType = 'easy' | 'medium' | 'hard';
+import type {DifficulteType} from "../difficulte/DifficulteType.ts";
 
 export type QuizzRequest = {
-  categorie: number,
-  difficulte: DifficulteType
+  categorie: string,
+  difficulte: DifficulteType,
 };
