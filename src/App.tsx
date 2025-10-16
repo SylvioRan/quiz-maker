@@ -4,11 +4,13 @@ import routes from "./app/routes.tsx";
 
 function App() {
   return (
-    <Routes>
-      {routes.map(route => (
-        <Route key={route.path} path={route.path} element={route.element}/>
-      ))}
-    </Routes>
+    <main className="container">
+      <Routes>
+        {routes.map(route => (
+          <Route key={route.path} path={route.path} element={route.element}/>
+        ))}
+      </Routes>
+    </main>
   )
 }
 
