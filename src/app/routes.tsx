@@ -15,9 +15,4 @@ export const router = createBrowserRouter([
       {path: '*', element: <NotFound/>},
     ]
   }
-])
-/** const routes: RouteItem[] = [
- {path: '/', element: <QuizzMaker/>},
- {path: '/resultats', element: <Resultats/>},
- {path: "*", element: <NotFound/>},
- ]; **/
+]);

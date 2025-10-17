@@ -1,7 +1,8 @@
 import './App.css'
+import type {JSX} from "react";
 import {Outlet} from "react-router-dom";
 
-function App() {
+function App(): JSX.Element {
   return (
     <main className="container">
       <Outlet/>

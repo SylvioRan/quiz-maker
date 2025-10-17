@@ -5,7 +5,7 @@ import {recupererCategories} from "../service/quizzService.ts";
 /**
  * Récupère les catégories possibles de quizz
  */
-export function useCategories() {
+export function useCategories(): CategoriesReponse | null {
   const [categories, setCategories] = useState<CategoriesReponse | null>(null);
 
   useEffect(() => {

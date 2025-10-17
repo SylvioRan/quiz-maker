@@ -1,6 +1,7 @@
 import type {QuizzCaracteristics} from "../models/quizz/QuizzCaracteristics.ts";
 import {decodeHtmlEntities} from "../utils/htmlUtils.ts";
 import {type NavigateFunction, useNavigate} from "react-router-dom";
+import type {JSX} from "react";
 
 /**
  * Récupérer la couleur de la réponse. Toutes les bonnes réponses sont en verts
@@ -46,7 +47,7 @@ function getMarkColor(score: number): string {
   return "";
 }
 
-export default function Resultats() {
+export default function Resultats(): JSX.Element {
   const quizzList: QuizzCaracteristics[] = JSON.parse(localStorage.getItem('quizz') || '[]');
   const answers: Record<string, string> = JSON.parse(localStorage.getItem('answers') || '{}');
 

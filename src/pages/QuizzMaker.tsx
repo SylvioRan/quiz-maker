@@ -1,8 +1,9 @@
 import {useCategories} from "../hooks/useCategories.ts";
 import CreateQuizz from "../component/CreateQuizz.tsx";
 import type {CategoriesReponse} from "../models/categorie/CategoriesReponse.ts";
+import type {JSX} from "react";
 
-export default function QuizzMaker() {
+export default function QuizzMaker(): JSX.Element {
   const categories: CategoriesReponse | null = useCategories();
 
   return (

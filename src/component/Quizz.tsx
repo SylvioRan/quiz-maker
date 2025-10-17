@@ -1,5 +1,5 @@
 import type {QuizzCaracteristics} from "../models/quizz/QuizzCaracteristics.ts";
-import {type FormEvent, useCallback, useEffect, useMemo, useState} from "react";
+import {type FormEvent, type JSX, useCallback, useEffect, useMemo, useState} from "react";
 import {type NavigateFunction, useNavigate} from "react-router-dom";
 import {decodeHtmlEntities} from "../utils/htmlUtils.ts";
 import {melangerList} from "../utils/listUtils.ts";
@@ -8,7 +8,7 @@ type QuizzDisplayProps = {
   quizzList: QuizzCaracteristics[],
 };
 
-export default function Quizz({quizzList}: Readonly<QuizzDisplayProps>) {
+export default function Quizz({quizzList}: Readonly<QuizzDisplayProps>): JSX.Element {
   const [answers, setAnswers] = useState<Record<string, string>>({});
 
   // A chaque fois que le quizz change, on réinitialise les réponses
