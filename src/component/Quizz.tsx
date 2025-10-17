@@ -1,5 +1,5 @@
 import type {QuizzCaracteristics} from "../models/quizz/QuizzCaracteristics.ts";
-import {useCallback, useEffect, useMemo, useState} from "react";
+import {type FormEvent, useCallback, useEffect, useMemo, useState} from "react";
 import {type NavigateFunction, useNavigate} from "react-router-dom";
 import {decodeHtmlEntities} from "../utils/htmlUtils.ts";
 import {melangerList} from "../utils/listUtils.ts";
@@ -36,7 +36,8 @@ export default function Quizz({quizzList}: Readonly<QuizzDisplayProps>) {
   };
 
   const navigate: NavigateFunction = useNavigate();
-  const handleSubmit = () => {
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
     // Stockage du quizz et des réponses, pour l'affichage des résultats
     localStorage.setItem('quizz', JSON.stringify(quizzListMelange));
     localStorage.setItem('answers', JSON.stringify(answers));
@@ -46,7 +47,7 @@ export default function Quizz({quizzList}: Readonly<QuizzDisplayProps>) {
 
   return (
     <section>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(e) => handleSubmit(e)}>
         {quizzListMelange.map((quizz: QuizzCaracteristics) => (
           <div key={quizz.id}>
             <fieldset>
