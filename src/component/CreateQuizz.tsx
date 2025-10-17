@@ -1,6 +1,6 @@
 import type {Categorie} from "../models/categorie/Categorie.ts";
 import {type FormEvent, useState} from "react";
-import type {Difficulte} from "../models/Difficulte.ts";
+import type {Difficulte} from "../models/difficulte/Difficulte.ts";
 import {recupererQuizz} from "../service/quizzService.ts";
 import type {DifficulteType} from "../models/difficulte/DifficulteType.ts";
 import type {QuizzCaracteristics} from "../models/quizz/QuizzCaracteristics.ts";
@@ -10,7 +10,7 @@ type CreatQuizzProps = {
   categories: Categorie[],
 };
 
-export default function CreateQuizz({categories}: CreatQuizzProps) {
+export default function CreateQuizz({categories}: Readonly<CreatQuizzProps>) {
   const [categorie, setCategorie] = useState<string>('');
   const [difficulte, setDifficulte] = useState<string>('');
   const [quizz, setQuizz] = useState<QuizzCaracteristics[] | null>(null);

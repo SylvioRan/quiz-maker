@@ -1,4 +1,4 @@
-import type {DifficulteType} from "./difficulte/DifficulteType.ts";
+import type {DifficulteType} from "./DifficulteType.ts";
 
 export type Difficulte = {
   valeur: DifficulteType,

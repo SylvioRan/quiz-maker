@@ -6,12 +6,10 @@ export default function QuizzMaker() {
   const categories: CategoriesReponse | null = useCategories();
 
   return (
-    <>
-      <div className="text-centered">
-        <h5>QUIZZ MAKER</h5>
+    <div className="text-centered">
+      <h5>QUIZZ MAKER</h5>
 
-        <CreateQuizz categories={categories?.trivia_categories ?? []}/>
-      </div>
-    </>
+      <CreateQuizz categories={categories?.trivia_categories ?? []}/>
+    </div>
   )
 }

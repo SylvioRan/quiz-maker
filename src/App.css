@@ -43,3 +43,15 @@ input[type="radio"] {
   border-color: darkred;
   background-color: red;
 }
+
+.mark-red {
+  background-color: red;
+}
+
+.mark-yellow {
+  background-color: yellow;
+}
+
+.mark-green {
+  background-color: green;
+}

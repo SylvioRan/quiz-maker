@@ -5,9 +5,9 @@
  * @param liste
  */
 export function melangerList<T>(liste: T[]): T[] {
-  const melange = [...liste];
-  for (let i = melange.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+  const melange: T[] = [...liste];
+  for (let i: number = melange.length - 1; i > 0; i--) {
+    const j: number = Math.floor(Math.random() * (i + 1));
     [melange[i], melange[j]] = [melange[j], melange[i]];
   }
   return melange;

@@ -4,7 +4,7 @@
  * @param text le texte contenant du HTML à décoder
  */
 export function decodeHtmlEntities(text: string): string {
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(text, 'text/html');
+  const parser: DOMParser = new DOMParser();
+  const doc: Document = parser.parseFromString(text, 'text/html');
   return doc.documentElement.textContent || '';
 }

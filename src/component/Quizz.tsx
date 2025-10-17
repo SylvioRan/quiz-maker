@@ -1,6 +1,6 @@
 import type {QuizzCaracteristics} from "../models/quizz/QuizzCaracteristics.ts";
 import {useCallback, useEffect, useMemo, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {type NavigateFunction, useNavigate} from "react-router-dom";
 import {decodeHtmlEntities} from "../utils/htmlUtils.ts";
 import {melangerList} from "../utils/listUtils.ts";
 
@@ -8,7 +8,7 @@ type QuizzDisplayProps = {
   quizzList: QuizzCaracteristics[],
 };
 
-export default function Quizz({quizzList}: QuizzDisplayProps) {
+export default function Quizz({quizzList}: Readonly<QuizzDisplayProps>) {
   const [answers, setAnswers] = useState<Record<string, string>>({});
 
   // A chaque fois que le quizz change, on réinitialise les réponses
@@ -16,6 +16,7 @@ export default function Quizz({quizzList}: QuizzDisplayProps) {
     setAnswers({});
   }, [quizzList]);
 
+  // On applique le mélange que si la liste de quizz se met à jour
   const quizzListMelange: QuizzCaracteristics[] = useMemo(() =>
     quizzList.map(quizz => ({
       ...quizz,
@@ -23,17 +24,18 @@ export default function Quizz({quizzList}: QuizzDisplayProps) {
     })), [quizzList]
   );
 
-  const isChecked = (quizzId: string, answer: string) => answers[quizzId] === answer;
+  const isChecked = (quizzId: string, answer: string): boolean => answers[quizzId] === answer;
   // On vérifie si chaque id de la question est bien présent dans les réponses pour afficher
   const displaySubmitButton = useCallback(() =>
       quizzList.map(quizz => quizz.id).every(id => id in answers)
     , [answers, quizzList]);
 
-  const handleChange = (questionId: string, answer: string) => {
+  // Stockage des réponses pour chaque question
+  const handleChange = (questionId: string, answer: string): void => {
     setAnswers(prev => ({...prev, [questionId]: answer}));
   };
 
-  const navigate = useNavigate();
+  const navigate: NavigateFunction = useNavigate();
   const handleSubmit = () => {
     // Stockage du quizz et des réponses, pour l'affichage des résultats
     localStorage.setItem('quizz', JSON.stringify(quizzListMelange));
