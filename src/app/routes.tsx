@@ -15,6 +15,4 @@ export const router = createBrowserRouter([
       {path: '*', element: <NotFound/>},
     ]
   }
-], {
-  basename: 'quiz-maker',
-});
+]);
