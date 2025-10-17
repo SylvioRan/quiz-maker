@@ -1,12 +1,15 @@
 import type {QuizzCaracteristics} from "../models/quizz/QuizzCaracteristics.ts";
 import {useCallback, useEffect, useMemo, useState} from "react";
+import {useNavigate} from "react-router-dom";
+import {decodeHtmlEntities} from "../utils/htmlUtils.ts";
+import {melangerList} from "../utils/listUtils.ts";
 
 type QuizzDisplayProps = {
   quizzList: QuizzCaracteristics[],
 };
 
-export default function QuizzDisplay({quizzList}: QuizzDisplayProps) {
-  const [answers, setAnswers] = useState<{ [key: string]: string }>({});
+export default function Quizz({quizzList}: QuizzDisplayProps) {
+  const [answers, setAnswers] = useState<Record<string, string>>({});
 
   // A chaque fois que le quizz change, on réinitialise les réponses
   useEffect(() => {
@@ -30,9 +33,18 @@ export default function QuizzDisplay({quizzList}: QuizzDisplayProps) {
     setAnswers(prev => ({...prev, [questionId]: answer}));
   };
 
+  const navigate = useNavigate();
+  const handleSubmit = () => {
+    // Stockage du quizz et des réponses, pour l'affichage des résultats
+    localStorage.setItem('quizz', JSON.stringify(quizzListMelange));
+    localStorage.setItem('answers', JSON.stringify(answers));
+
+    navigate('/resultats');
+  };
+
   return (
     <section>
-      <form>
+      <form onSubmit={handleSubmit}>
         {quizzListMelange.map((quizz: QuizzCaracteristics) => (
           <div key={quizz.id}>
             <fieldset>
@@ -52,7 +64,6 @@ export default function QuizzDisplay({quizzList}: QuizzDisplayProps) {
                   </label>
                 ))}
               </div>
-
             </fieldset>
           </div>
         ))}
@@ -63,30 +74,4 @@ export default function QuizzDisplay({quizzList}: QuizzDisplayProps) {
       </form>
 
     </section>);
-}
-
-/**
- * Il y a du contenu HTML dans les réponses envoyés, il faut donc les décoder pour avoir du texte propre
- *
- * @param text le texte contenant du HTML à décoder
- */
-function decodeHtmlEntities(text: string): string {
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(text, 'text/html');
-  return doc.documentElement.textContent || '';
-}
-
-
-/**
- * Mélange avec l'algorithme de Fisher-Yates. On parcourt le tableau de la fin vers le début, et pour chaque élément,
- * on l’échange avec un autre élément choisi aléatoirement parmi ceux qui le précèdent.
- * @param liste
- */
-function melangerList<T>(liste: T[]): T[] {
-  const melange = [...liste];
-  for (let i = melange.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [melange[i], melange[j]] = [melange[j], melange[i]];
-  }
-  return melange;
 }

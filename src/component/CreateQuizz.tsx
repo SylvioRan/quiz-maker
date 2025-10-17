@@ -4,7 +4,7 @@ import type {Difficulte} from "../models/Difficulte.ts";
 import {recupererQuizz} from "../service/quizzService.ts";
 import type {DifficulteType} from "../models/difficulte/DifficulteType.ts";
 import type {QuizzCaracteristics} from "../models/quizz/QuizzCaracteristics.ts";
-import QuizzDisplay from "./QuizzDisplay.tsx";
+import Quizz from "./Quizz.tsx";
 
 type CreatQuizzProps = {
   categories: Categorie[],
@@ -23,7 +23,7 @@ export default function CreateQuizz({categories}: CreatQuizzProps) {
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault(); // Permet de ne pas faire rafraichir la page
-    
+
     if (!categorie || !difficulte) {
       alert('Veuillez sélectionner une catégorie et une difficulté.');
       return;
@@ -58,7 +58,7 @@ export default function CreateQuizz({categories}: CreatQuizzProps) {
         </div>
       </form>
 
-      {(quizz && quizz?.length > 0) && (<QuizzDisplay quizzList={quizz}/>)}
+      {(quizz && quizz?.length > 0) && (<Quizz quizzList={quizz}/>)}
     </>
   );
 }

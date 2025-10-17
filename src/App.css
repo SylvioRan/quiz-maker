@@ -25,7 +25,7 @@ input[type="radio"] {
   display: none; /* cache le cercle natif */
 }
 
-.card-radio:hover {
+.card-radio:not(:disabled):hover {
   background-color: #c8e6c9; /* vert un peu plus foncé au survol */
 }
 
@@ -33,7 +33,13 @@ input[type="radio"] {
   margin-right: 0.5rem;
 }
 
-.card-radio.selected {
+.card-radio.selected,
+.card-radio.correct {
   border-color: darkgreen; /* vert foncé */
   background-color: forestgreen; /* fond vert sélectionné */
+}
+
+.card-radio.incorrect {
+  border-color: darkred;
+  background-color: red;
 }
