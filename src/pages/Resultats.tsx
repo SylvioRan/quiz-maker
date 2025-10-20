@@ -49,7 +49,7 @@ function getMarkColor(score: number): string {
 }
 
 export default function Resultats(): JSX.Element {
-  const {quiz, answers} = useQuizContext();
+  const {quiz, answers, resetAnswers} = useQuizContext();
   const isChecked = (quizzId: string, answer: string): boolean => answers[quizzId] === answer;
 
   const nbReponseVrai: number = quiz.reduce((count, q) => {
@@ -61,8 +61,7 @@ export default function Resultats(): JSX.Element {
   const navigate: NavigateFunction = useNavigate();
   const createNewQuizz = () => {
     // Nettoyage des éléments en localStorage
-    localStorage.removeItem('quizz');
-    localStorage.removeItem('answers');
+    resetAnswers();
 
     navigate('/');
   };

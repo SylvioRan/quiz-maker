@@ -26,6 +26,7 @@ export function QuizProvider({children}: QuizProviderProps) {
     setQuiz([]);
     setAnswers({});
   }, []);
+
   const value = useMemo(() => ({
     quiz,
     setQuiz,
