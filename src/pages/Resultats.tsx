@@ -2,6 +2,7 @@ import type {QuizzCaracteristics} from "../models/quizz/QuizzCaracteristics.ts";
 import {decodeHtmlEntities} from "../utils/htmlUtils.ts";
 import {type NavigateFunction, useNavigate} from "react-router-dom";
 import type {JSX} from "react";
+import {useQuizContext} from "../hooks/useQuizContext.ts";
 
 /**
  * Récupérer la couleur de la réponse. Toutes les bonnes réponses sont en verts
@@ -48,12 +49,10 @@ function getMarkColor(score: number): string {
 }
 
 export default function Resultats(): JSX.Element {
-  const quizzList: QuizzCaracteristics[] = JSON.parse(localStorage.getItem('quizz') || '[]');
-  const answers: Record<string, string> = JSON.parse(localStorage.getItem('answers') || '{}');
-
+  const {quiz, answers} = useQuizContext();
   const isChecked = (quizzId: string, answer: string): boolean => answers[quizzId] === answer;
 
-  const nbReponseVrai: number = quizzList.reduce((count, q) => {
+  const nbReponseVrai: number = quiz.reduce((count, q) => {
     const reponseUser: string = answers[q.id];
     const isBonneReponse: boolean = reponseUser === q.correct_answer;
     return count + (isBonneReponse ? 1 : 0);
@@ -72,13 +71,13 @@ export default function Resultats(): JSX.Element {
     <div className="text-centered">
       <h5>RESULTS</h5>
 
-      {quizzList.map((quizz: QuizzCaracteristics) => (
+      {quiz.map((quizz: QuizzCaracteristics) => (
         <div key={quizz.id}>
           <fieldset>
             <legend>{decodeHtmlEntities(quizz.question)}</legend>
             <div className="align-center">
               {quizz.answers.map((answer: string, index) => (
-                <label className={getRadioClass(quizzList, answers, quizz.id, answer)} key={answer}
+                <label className={getRadioClass(quiz, answers, quizz.id, answer)} key={answer}
                        style={{width: '100%'}}>
                   <input
                     type="radio"
@@ -97,7 +96,7 @@ export default function Resultats(): JSX.Element {
 
       <p>
         <mark className={getMarkColor(nbReponseVrai)}>
-          You scored {nbReponseVrai} out of {quizzList.length}
+          You scored {nbReponseVrai} out of {quiz.length}
         </mark>
       </p>
 

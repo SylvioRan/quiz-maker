@@ -1,28 +1,26 @@
 import type {QuizzCaracteristics} from "../models/quizz/QuizzCaracteristics.ts";
-import {type FormEvent, type JSX, useCallback, useEffect, useMemo, useState} from "react";
+import {type FormEvent, type JSX, useCallback, useEffect} from "react";
 import {type NavigateFunction, useNavigate} from "react-router-dom";
 import {decodeHtmlEntities} from "../utils/htmlUtils.ts";
 import {melangerList} from "../utils/listUtils.ts";
+import {useQuizContext} from "../hooks/useQuizContext.ts";
 
 type QuizzDisplayProps = {
   quizzList: QuizzCaracteristics[],
 };
 
 export default function Quizz({quizzList}: Readonly<QuizzDisplayProps>): JSX.Element {
-  const [answers, setAnswers] = useState<Record<string, string>>({});
+  const {quiz, setQuiz, answers, setAnswer, resetAnswers} = useQuizContext();
 
   // A chaque fois que le quizz change, on réinitialise les réponses
   useEffect(() => {
-    setAnswers({});
-  }, [quizzList]);
-
-  // On applique le mélange que si la liste de quizz se met à jour
-  const quizzListMelange: QuizzCaracteristics[] = useMemo(() =>
-    quizzList.map(quizz => ({
+    resetAnswers();
+    const quizShuffle = quizzList.map(quizz => ({
       ...quizz,
       answers: melangerList(quizz.answers)
-    })), [quizzList]
-  );
+    }));
+    setQuiz(quizShuffle);
+  }, [quizzList, resetAnswers, setQuiz]);
 
   const isChecked = (quizzId: string, answer: string): boolean => answers[quizzId] === answer;
   // On vérifie si chaque id de la question est bien présent dans les réponses pour afficher
@@ -32,23 +30,19 @@ export default function Quizz({quizzList}: Readonly<QuizzDisplayProps>): JSX.Ele
 
   // Stockage des réponses pour chaque question
   const handleChange = (questionId: string, answer: string): void => {
-    setAnswers(prev => ({...prev, [questionId]: answer}));
+    setAnswer(questionId, answer);
   };
 
   const navigate: NavigateFunction = useNavigate();
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    // Stockage du quizz et des réponses, pour l'affichage des résultats
-    localStorage.setItem('quizz', JSON.stringify(quizzListMelange));
-    localStorage.setItem('answers', JSON.stringify(answers));
-
     navigate('/resultats');
   };
 
   return (
     <section>
       <form onSubmit={(e) => handleSubmit(e)}>
-        {quizzListMelange.map((quizz: QuizzCaracteristics) => (
+        {quiz.map((quizz: QuizzCaracteristics) => (
           <div key={quizz.id}>
             <fieldset>
               <legend>{decodeHtmlEntities(quizz.question)}</legend>
